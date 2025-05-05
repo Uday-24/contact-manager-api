@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
+const authRoutes = require('./routes/auth');
 
 dotenv.config();
 
@@ -11,9 +12,7 @@ connectDB();
 
 app.use(express.json());
 
-app.get('/', (req, res)=>{
-    res.send('Contact manager api is working');
-});
+app.use('/api/auth', authRoutes);
 
 app.listen(PORT, ()=>{
     console.log('Server is running on port', PORT);
