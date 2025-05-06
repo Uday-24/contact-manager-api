@@ -55,8 +55,31 @@ const getContactById = async (req, res) =>{
     }
 }
 
+const updateContact = async (req, res) => {
+    
+    let { id } = req.params;
+    try{
+        let { name, email, phone } = req.body;
+        let contact = await Contact.findOne({_id: id, userId: req.user.userId});
+        if(!contact){
+            return res.status(404).json({ message: 'Contact not found or unauthorized' });
+        }
+
+        contact.name = name || contact.name;
+        contact.email = email || contact.email;
+        contact.phone = phone || contact.phone;
+
+        let updatedContact = await contact.save();
+
+        res.status(200).json({message: 'Contact updated successfully', contact: updatedContact});
+    }catch(error){
+        res.status(500).json({message: 'Server Error'});
+    }
+}
+
 module.exports = {
     createContact,
     getContacts,
     getContactById,
+    updateContact,
 }
