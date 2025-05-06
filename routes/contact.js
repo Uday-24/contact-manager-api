@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const authenticate = require('../middleware/authMiddleware');
-const { createContact } = require('../controllers/contactController');
+const { createContact, getContacts, getContactById } = require('../controllers/contactController');
 
 router.post('/', authenticate, createContact);
+router.get('/', authenticate, getContacts);
+router.get('/:id', authenticate, getContactById);
 
 
 module.exports = router;
