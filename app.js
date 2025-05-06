@@ -2,7 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
-const authenticate = require('./middleware/authMiddleware');
+const contactRoutes = require('./routes/contact');
+// const authenticate = require('./middleware/authMiddleware');
 
 dotenv.config();
 
@@ -15,9 +16,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRoutes);
 
-app.get('/protected', authenticate, (req, res)=>{
-    res.json(req.user);
-});
+app.use('/api/contacts', contactRoutes);
 
 app.listen(PORT, ()=>{
     console.log('Server is running on port', PORT);
